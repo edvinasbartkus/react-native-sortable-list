@@ -28,6 +28,7 @@ export default class SortableList extends Component {
 
     renderRow: PropTypes.func.isRequired,
     renderFooter: PropTypes.func,
+    renderHeader: PropTypes.func,
 
     onChangeOrder: PropTypes.func,
     onActivateRow: PropTypes.func,
@@ -196,6 +197,7 @@ export default class SortableList extends Component {
           scrollEventThrottle={2}
           scrollEnabled={scrollEnabled}
           onScroll={this._onScroll}>
+          {this._renderHeader()}
           <View style={innerContainerStyle}>
             {this._renderRows()}
           </View>
@@ -259,6 +261,18 @@ export default class SortableList extends Component {
         </Row>
       );
     });
+  }
+
+  _renderHeader() {
+    if (!this.props.renderHeader || this.props.horizontal) {
+      return null;
+    }
+
+    return (
+      <View>
+        {this.props.renderHeader()}
+      </View>
+    );
   }
 
   _renderFooter() {
